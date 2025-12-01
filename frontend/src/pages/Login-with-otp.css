@@ -1,0 +1,96 @@
+.otp_main_card {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.otp-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.otp-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px 35px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+}
+
+.otp-card h3 {
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.otp-card p {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* Custom input */
+.otp-input {
+  border-radius: 10px;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.otp-input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 5px rgba(37, 117, 252, 0.4);
+}
+
+/* Custom button */
+.otp-btn {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  width: 100%;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.otp-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(37, 117, 252, 0.3);
+  background-color: #ccc;
+}
+
+/* Optional alert box style */
+.otp-alert {
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
