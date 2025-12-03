@@ -25,7 +25,7 @@ class Contact_controller extends Controller
         if ($request->hasFile('img_file') && $request->file('img_file')->isValid()) {
             $file = $request->file('img_file');
             $imageName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/contact', $imageName);
+            $file->storeAs('contact', $imageName, 'public');
         }
 
 
@@ -68,32 +68,39 @@ class Contact_controller extends Controller
 
         if ($contact) {
             $request->validate([
-                'employee_name'    => 'required|string|max:255',
-                'employee_code'    => 'required|integer',
-                'mobile'   => 'integer',
-                'place'     => 'string',
-                'maritial_status'           => 'string'
+                'employee_name' => 'string|max:255',
+                'employee_code' => 'integer',
+                'mobile' => 'integer',
+                'place' => 'string',
+                'maritial_status' => 'string',
+                'img_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
             ]);
 
+            $updateData = [
+                'employee_name' => $request->employee_name ?? $contact->employee_name,
+                'employee_code' => $request->employee_code ?? $contact->employee_code,
+                'mobile' => $request->mobile ?? $contact->mobile,
+                'place' => $request->place ?? $contact->place,
+                'maritial_status' => $request->maritial_status ?? $contact->maritial_status
+            ];
 
-            $contact->update([
-                'employee_name' => $request->employee_name,
-                'employee_code' => $request->employee_code,
-                'mobile' => $request->mobile,
-                'place' => $request->place,
-                'maritial_status' => $request->maritial_status
+            if ($request->hasFile('img_file') && $request->file('img_file')->isValid()) {
+                $file = $request->file('img_file');
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('contact', $imageName, 'public'); // ✅ stores in public disk
+                $updateData['img_file'] = $imageName; // update DB
+            }
 
-            ]);
 
-            return response()->json([
-                'status' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 'failed'
-            ]);
+
+            $contact->update($updateData);
+
+            return response()->json(['status' => 'success']);
         }
+
+        return response()->json(['status' => 'failed']);
     }
+
 
     public function Contact_delete($id)
     {

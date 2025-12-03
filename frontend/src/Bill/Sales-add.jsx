@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -56,55 +56,59 @@ const Sales_add_form = ({ base_url }) => {
             });
     }
 
-
+    useEffect(() => {
+        document.title = "Sales - Add";
+    }, []);
     return (
         <div className="container">
-            <h3 className="mt-5">Sales Add</h3>
-            <span>Commercial document that records the products to the customers.</span><hr />
-            <form method="POST" onSubmit={submit_handler} >
+            <div className="mt-5">
+                <h3 className="mt-5">Sales Add</h3>
+                <span>Commercial document that records the products to the customers.</span><hr />
+                <form method="POST" onSubmit={submit_handler} >
 
-                <div className="row">
+                    <div className="row">
 
-                    <div className="col-md-3 form-group">
-                        <label className="">Product Name</label>
-                        <select className="form-control" onChange={onchange_handler} type="text" name="product_name" id="product_name" >
-                            <option></option>
-                            <option>Pipes</option>
-                            <option>Drum</option>
-                            <option>Switch Box</option>
+                        <div className="col-md-3 form-group">
+                            <label className="">Product Name</label>
+                            <select className="form-control" onChange={onchange_handler} type="text" name="product_name" id="product_name" >
+                                <option></option>
+                                <option>Pipes</option>
+                                <option>Drum</option>
+                                <option>Switch Box</option>
 
-                        </select>
-                    </div>
-                    <div className="col-md-3 form-group">
-                        <label className="">Product Code</label>
-                        <input className="form-control" onChange={onchange_handler} type="text" name="product_code" id="product_code" />
-                    </div>
-                    <div className="col-md-3 form-group">
-                        <label className="">Qty</label>
-                        <input className="form-control" onChange={onchange_handler} type="text" name="product_qty" id="product_qty" />
-                    </div>
-                    <div className="col-md-3 form-group">
-                        <label className="">Price</label>
-                        <input className="form-control" onChange={onchange_handler} type="text" name="price" id="price" />
-                    </div>
-                    <div className="col-md-3 form-group">
-                        <label className="">Customer Name</label>
-                        <input className="form-control" onChange={onchange_handler} type="text" name="customer_name" id="customer_name" />
-                    </div>
+                            </select>
+                        </div>
+                        <div className="col-md-3 form-group">
+                            <label className="">Product Code</label>
+                            <input className="form-control" onChange={onchange_handler} type="text" name="product_code" id="product_code" />
+                        </div>
+                        <div className="col-md-3 form-group">
+                            <label className="">Qty</label>
+                            <input className="form-control" onChange={onchange_handler} type="text" name="product_qty" id="product_qty" />
+                        </div>
+                        <div className="col-md-3 form-group">
+                            <label className="">Price</label>
+                            <input className="form-control" onChange={onchange_handler} type="text" name="price" id="price" />
+                        </div>
+                        <div className="col-md-3 form-group">
+                            <label className="">Customer Name</label>
+                            <input className="form-control" onChange={onchange_handler} type="text" name="customer_name" id="customer_name" />
+                        </div>
 
-                    <div className="col-md-12 mt-3">
-                        <button type="submit" className="btn btn-success float-end">Save</button>
+                        <div className="col-md-12 mt-3">
+                            <button type="submit" className="btn btn-success float-end">Save</button>
 
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <ToastContainer
-                        pauseOnHover
-                        autoClose={3000}
-                        position="top-right"
-                    />
-                </div>
-            </form>
+                    <div>
+                        <ToastContainer
+                            pauseOnHover
+                            autoClose={3000}
+                            position="top-right"
+                        />
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

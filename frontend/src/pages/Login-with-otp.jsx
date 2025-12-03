@@ -13,7 +13,9 @@ const Login_with_otp = ({ base_url_web }) => {
     email: ''
   })
 
-
+ useEffect(() => {
+              document.title = "Login-OTP";
+   },[]);
   function onsubmithandler(e) {
     e.preventDefault();
 

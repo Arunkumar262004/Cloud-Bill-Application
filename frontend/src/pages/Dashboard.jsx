@@ -1,16 +1,18 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 const Dashboard = ({ base_url }) => {
 
- 
 
+ useEffect(() => {
+              document.title = "Dashboard";
+   },[]);
   function Log_out_session() {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("user"); // if user details saved
-  window.location.href = "/login"; // redirect to login page
-}
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("user"); // if user details saved
+    window.location.href = "/login"; // redirect to login page
+  }
 
 
   return (

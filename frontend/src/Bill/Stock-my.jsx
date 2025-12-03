@@ -21,6 +21,7 @@ const Stock_my = ({ base_url }) => {
 
 
     useEffect(() => {
+            document.title = "Stock - My";
 
         if (location.state?.type == "success") {
             toast.success(location.state.message)

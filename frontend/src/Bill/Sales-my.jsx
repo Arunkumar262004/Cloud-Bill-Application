@@ -29,6 +29,7 @@ const Sales_my = ({ base_url }) => {
 
 
     useEffect(() => {
+            document.title = "Sales - My";
 
         if (location.state?.type == "success") {
             toast.success(location.state.message)

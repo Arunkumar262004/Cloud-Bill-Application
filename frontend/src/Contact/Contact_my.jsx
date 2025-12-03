@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+var base_url_image = "http://127.0.0.1:8000";
 
 const Sales_my = ({ base_url }) => {
 
@@ -29,6 +30,8 @@ const Sales_my = ({ base_url }) => {
 
 
     useEffect(() => {
+            document.title = "Contact List - My";
+
 
         if (location.state?.type == "success") {
             toast.success(location.state.message)
@@ -62,6 +65,7 @@ const Sales_my = ({ base_url }) => {
                 <thead className="table-dark">
                     <tr >
                         <th>Id</th>
+                        <th>Employee Image</th>
                         <th>Employee Name</th>
                         <th>Employee Code</th>
                         <th>Mobile</th>
@@ -73,6 +77,13 @@ const Sales_my = ({ base_url }) => {
                     {Contacts.map((contact) => (
                         <tr key={contact.id}>
                             <td>{contact.id}</td>
+                            <td><img
+                                src={`${base_url_image}/storage/contact/${contact.img_file}`}
+                                width="80"
+                                height="80"
+                                alt="contact"
+                            />
+                            </td>
                             <td>{contact.employee_name}</td>
                             <td>{contact.employee_code}</td>
                             <td>{contact.mobile}</td>

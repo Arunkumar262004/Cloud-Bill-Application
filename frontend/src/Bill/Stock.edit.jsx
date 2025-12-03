@@ -8,7 +8,7 @@ const Stock_editform = ({ base_url }) => {
     const [input, SetInputs] = useState({
         product_name: '',
         product_code: '',
-        stock_qty: '',  
+        stock_qty: '',
         customer_name: '',
         price: ''
     })
@@ -48,7 +48,9 @@ const Stock_editform = ({ base_url }) => {
     }
 
     useEffect(() => {
-        axios.get(base_url+'/stock-get-by-id/' + id, {
+        document.title = "Stock - Update  #" + id;
+
+        axios.get(base_url + '/stock-get-by-id/' + id, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }

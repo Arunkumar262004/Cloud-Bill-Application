@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -21,6 +21,9 @@ const Sales_add_form = ({ base_url }) => {
   function onchange_handler(e) {
     setInputs({ ...input, [e.target.name]: e.target.value });
   }
+   useEffect(() => {
+              document.title = "Contact List - Add";
+   },[]);
 
   function imageChangeHandler(e) {
     const file = e.target.files[0];

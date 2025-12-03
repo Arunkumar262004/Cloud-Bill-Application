@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,7 +47,9 @@ const Stock_add_form = ({ base_url }) => {
                 console.error("Error saving data:", error);
             });
     }
-
+ useEffect(() => {
+              document.title = "Stock - Add";
+   },[]);
 
     return (
         <div className="container">

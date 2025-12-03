@@ -38,6 +38,8 @@ const Confirm_otp = ({ base_url_web }) => {
     }
 
     useEffect(() => {
+                    document.title = "Validate OTP";
+
         if (!location.state) return; // 👈 safely exit if null
 
         if (location.state?.type === "true") {
