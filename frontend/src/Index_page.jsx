@@ -94,7 +94,7 @@ const Index_page = ({ base_url }) => {
                 paddingRight: "15px",
             }}
         >
-            <h2 className="mb-4 mt-2">Dashboard</h2>
+            <h3 className="mb-4 mt-3">Dashboard</h3>
 
 
             <div className="row g-4 mb-4">

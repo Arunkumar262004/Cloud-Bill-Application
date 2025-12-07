@@ -27,10 +27,18 @@ const Sales_my = ({ base_url }) => {
         })
     }
 
+    const downloadPDF = async (id) => {
+        const res = await axios.get(`${base_url}/contact-pdf/${id}`, {
+            responseType: "blob",
+            headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` }
+        });
 
+        const url = URL.createObjectURL(res.data);
+        window.open(url, "_blank");
+    };
 
     useEffect(() => {
-            document.title = "Contact List - My";
+        document.title = "Contact List - My";
 
 
         if (location.state?.type == "success") {
@@ -93,7 +101,7 @@ const Sales_my = ({ base_url }) => {
 
                             </td>
                             <td>
-                                <button className="">
+                                <button onClick={() => downloadPDF(contact.id)} className="">
                                     <i className="bi bi-printer-fill fs-2 border-0 bg-transparent focus:outline-none"></i>
                                 </button>
 

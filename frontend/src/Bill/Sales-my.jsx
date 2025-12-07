@@ -10,17 +10,17 @@ const Sales_my = ({ base_url }) => {
     var location = useLocation();
 
     function delete_by_id(delete_id) {
-        axios.delete(base_url + `/sales-delete/${delete_id}`,{
+        axios.delete(base_url + `/sales-delete/${delete_id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then(() => {
             toast.success('Sales Entry Deleted Successfully')
-            axios.get(base_url + '/sales-get',{
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`
-            }
-        }).then((res) => {
+            axios.get(base_url + '/sales-get', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("access_token")}`
+                }
+            }).then((res) => {
                 SetInput(res.data.data)
             })
         })
@@ -29,7 +29,7 @@ const Sales_my = ({ base_url }) => {
 
 
     useEffect(() => {
-            document.title = "Sales - My";
+        document.title = "Sales - My";
 
         if (location.state?.type == "success") {
             toast.success(location.state.message)
@@ -47,16 +47,16 @@ const Sales_my = ({ base_url }) => {
 
     }, [base_url, location.state])
 
-    
-    const downloadPDF = async (id) => {
-    const res = await axios.get(`${base_url}/download-pdf/${id}`, {
-        responseType: "blob",
-        headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` }
-    });
 
-    const url = URL.createObjectURL(res.data);
-    window.open(url, "_blank");
-};
+    const downloadPDF = async (id) => {
+        const res = await axios.get(`${base_url}/download-pdf/${id}`, {
+            responseType: "blob",
+            headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` }
+        });
+
+        const url = URL.createObjectURL(res.data);
+        window.open(url, "_blank");
+    };
 
     return (
         <div className="container">
@@ -96,7 +96,7 @@ const Sales_my = ({ base_url }) => {
                             </td>
                             <td>
                                 <button onClick={() => downloadPDF(sale.id)} className="">
-                                    <i className="bi bi-printer-fill fs-2 border-0 bg-transparent focus:outline-none"></i> 
+                                    <i className="bi bi-printer-fill fs-2 border-0 bg-transparent focus:outline-none"></i>
                                 </button>
 
                             </td>

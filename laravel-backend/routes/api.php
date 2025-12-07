@@ -7,6 +7,8 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\Stock_controller;
 use App\Http\Controllers\Contact_controller;
+use App\Http\Controllers\Contact_bill_tcpdf;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,7 @@ Route::post('/confirm-otp', [otp_login_page::class, 'confirm_otp']);
 Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('/download-pdf/{id}', [PdfController::class, 'downloadPDF']);
+    Route::get('/contact-pdf/{id}', [Contact_bill_tcpdf::class, 'Download_Contact_PDF']);
 
     // Sales
     Route::post('/sales-create', [SalesController::class, 'Store_sales']);
