@@ -90,8 +90,8 @@ const Sales_my = ({ base_url }) => {
                             <td>{sale.product_code}</td>
                             <td>{sale.product_qty}</td>
                             <td>
-                                <Link to={`/sales-edit/${sale.id}`} className="btn btn-success me-2">Update</Link>
-                                <button onClick={() => { delete_by_id(sale.id) }} className="btn btn-danger ml-2">Delete</button>
+                                <Link to={`/sales-edit/${sale.id}`} className="btn btn-success me-2"><i class="bi bi-pencil-square"></i></Link>
+                                <button onClick={() => { delete_by_id(sale.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
 
                             </td>
                             <td>

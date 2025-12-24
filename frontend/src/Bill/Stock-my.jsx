@@ -69,8 +69,8 @@ const Stock_my = ({ base_url }) => {
                             <td>{stock.product_code}</td>
                             <td>{stock.stock_qty}</td>
                             <td>
-                                <Link to={`/stock-edit/${stock.id}`} className="btn btn-success me-2">Update</Link>
-                                <button onClick={() => { delete_by_id(stock.id) }} className="btn btn-danger ml-2">Delete</button>
+                                <Link to={`/stock-edit/${stock.id}`} className="btn btn-success me-2"><i class="bi bi-pencil-square"></i></Link>
+                                <button onClick={() => { delete_by_id(stock.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
 
                             </td>
                             
