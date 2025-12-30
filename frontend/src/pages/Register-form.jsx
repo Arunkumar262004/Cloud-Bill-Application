@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = ({ base_url }) => {
+const Register = ({ base_url }) => {
     useEffect(() => {
-        document.title = "Login";
+        document.title = "Register";
     }, []);
 
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -20,7 +22,14 @@ const Login = ({ base_url }) => {
         setLoading(true);
 
         try {
-            const res = await axios.post(base_url + "/login", { email, password });
+            const res = await axios.post(base_url + "/register", {
+
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: confirmPassword 
+
+            });
 
             if (res.data.message === "success") {
                 localStorage.setItem("user", JSON.stringify(res.data));
@@ -31,7 +40,6 @@ const Login = ({ base_url }) => {
                 setTimeout(() => {
                     window.location.reload();
                 }, 100);
-
             } else {
                 setError("Server error");
             }
@@ -235,22 +243,21 @@ const Login = ({ base_url }) => {
                         </div>
                     </div>
 
-                    {/* Right Side - Login Form */}
+                     {/* Right Side - Login Form */}
                     <div className="col-lg-6 d-flex align-items-center justify-content-center p-2 p-md-2">
                         <div className="w-100" style={{ maxWidth: '480px' }}>
                             {/* Mobile Logo */}
-                            <div className="text-center mb-4 d-lg-none">
-                                <i className="bi bi-rocket-takeoff text-primary" style={{ fontSize: '44px' }}></i>
+                            <div className="text-center mb-2 d-lg-none">
+                                <i className="bi bi-rocket-takeoff text-primary" style={{ fontSize: '36px' }}></i>
                             </div>
 
-                            <div className="card-modern p-4 p-md-4">
-                                <div className="text-center mb-4">
-                                    <span className="feature-badge">
-                                        <i className="bi bi-shield-lock-fill me-2"></i>
-                                        Secure Login
+                            <div className="card-modern p-2 p-md-3">
+                                <div className="text-center mb-2">
+                                    <span className="feature-badge" style={{ padding: '8px 15px', fontSize: '13px', marginBottom: '8px' }}>
+                                        <i className="bi bi-shield-lock-fill me-1"></i>
+                                        Register Account
                                     </span>
-                                    <h2 className="fw-bold mb-2" style={{ color: '#1f2937', fontSize: '32px' }}>Welcome Back!</h2>
-                                    <p className="text-muted mb-0">Please enter your details to sign in</p>
+                                   
                                 </div>
 
                                 {/* Error Alert */}
@@ -269,6 +276,20 @@ const Login = ({ base_url }) => {
                                 </div>
 
                                 <form onSubmit={handleLogin}>
+                                    {/* name */}
+                                    <div className="mb-3">
+                                        <label htmlFor="text" className="form-label fw-semibold small mb-2" style={{ color: '#374151' }}>
+                                            Name
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control input-modern"
+                                            id="name"
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                        />
+                                    </div>
+
                                     {/* Email */}
                                     <div className="mb-3">
                                         <label htmlFor="email" className="form-label fw-semibold small mb-2" style={{ color: '#374151' }}>
@@ -279,7 +300,6 @@ const Login = ({ base_url }) => {
                                             className="form-control input-modern"
                                             id="email"
                                             placeholder="you@example.com"
-                                            value={email}
                                             onChange={(e) => setEmail(e.target.value)}
                                             required
                                         />
@@ -296,7 +316,6 @@ const Login = ({ base_url }) => {
                                                 className="form-control input-modern"
                                                 id="password"
                                                 placeholder="Enter your password"
-                                                value={password}
                                                 onChange={(e) => setPassword(e.target.value)}
                                                 required
                                                 style={{ paddingRight: '45px' }}
@@ -307,21 +326,20 @@ const Login = ({ base_url }) => {
                                             ></i>
                                         </div>
                                     </div>
+                                    <div className="mb-3">
+                                        <label className="form-label fw-semibold small mb-2">
+                                            Confirm Password
+                                        </label>
+                                        <input
+                                            type="password"
+                                            className="form-control input-modern"
+                                            placeholder="Confirm password"
+                                            onChange={(e) => setConfirmPassword(e.target.value)}
+                                            required
+                                        />
+                                    </div>
 
-                                    {/* Remember & Forgot
-                                    <div className="d-flex justify-content-between align-items-center mb-4">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="remember" />
-                                            <label className="form-check-label small" htmlFor="remember" style={{ color: '#6b7280' }}>
-                                                Remember me
-                                            </label>
-                                        </div>
-                                        <a href="#" className="small fw-semibold text-decoration-none" style={{ color: '#667eea' }}>
-                                            Forgot password?
-                                        </a>
-                                    </div> */}
 
-                                    {/* Login Button */}
                                     <button
                                         type="submit"
                                         className="btn btn-primary-modern w-100 text-white mb-3"
@@ -331,37 +349,20 @@ const Login = ({ base_url }) => {
                                         {loading ? (
                                             <>
                                                 <span className="spinner-border spinner-border-sm me-2"></span>
-                                                Signing in...
+                                                Registering...
                                             </>
                                         ) : (
                                             <>
-                                                Sign In
+                                                Register
                                                 <i className="bi bi-arrow-right ms-2"></i>
                                             </>
                                         )}
                                     </button>
 
-                                    {/* OTP Login */}
-                                    <Link
-                                        to="/Login-with-otp"
-                                        className="btn w-100 social-login-btn d-flex align-items-center justify-content-center gap-2 text-decoration-none"
-                                        style={{ color: '#374151' }}
-                                    >
-                                        <i className="bi bi-phone"></i>
-                                        <span className="fw-semibold">Sign in with OTP</span>
-                                    </Link>
+
                                 </form>
 
-                                {/* Sign Up */}
-                                <div className="text-center mt-4">
-                                    <p className="small mb-0" style={{ color: '#6b7280' }}>
-                                        Don't have an account?{" "}
 
-                                        <Link
-                                            to="/register" className="fw-bold text-decoration-none" style={{ color: '#667eea' }}
-                                        >Sign up for free</Link>
-                                    </p>
-                                </div>
                             </div>
 
 
@@ -373,4 +374,4 @@ const Login = ({ base_url }) => {
     );
 };
 
-export default Login;
+export default Register;

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import './App.css'
 import { Navigate, Route, Router, Routes, useNavigate } from 'react-router-dom'
-import Register_page from './pages/Register'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import Index_page from './Index_page'
@@ -18,6 +17,7 @@ import Confirm_otp from './pages/Cofirm_Otp';
 import Contact_my from './Contact/Contact_my';
 import Contact_add from './Contact/Contact_add';
 import Contact_edit from './Contact/Contact_edit';
+import Register from './pages/Register-form'
 
 
 
@@ -51,6 +51,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path='/Login-with-otp' element={<Login_with_otp base_url_web={base_url_web} />} />
         <Route path='/Confirm-otp' element={<Confirm_otp base_url_web={base_url_web} />} />
+        <Route path='/register' element={<Register base_url={base_url} />} />
 
         {authenticated && (
           <Route element={<Dashboard base_url={base_url} />}>

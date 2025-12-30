@@ -21,7 +21,7 @@ class otp_login_page extends Controller
             ]);
         }
 
-        $otp = rand(10000, 90000);
+        $otp = rand(100000, 900000);
         $user->update(['otp' => $otp]);
 
         Mail::send('emails.email-template', ['otp' => $otp], function ($message) use ($request) {

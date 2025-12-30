@@ -9,7 +9,7 @@ const Bill_My = () => {
     return (
         <div className="container p-2">
             
-            <div className="row g-3 mt-3">
+            <div className="row g-3 ">
                 <h2>Sales Section</h2>
                 <hr />
 

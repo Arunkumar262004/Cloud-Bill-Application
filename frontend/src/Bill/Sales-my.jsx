@@ -60,7 +60,7 @@ const Sales_my = ({ base_url }) => {
 
     return (
         <div className="container">
-            <h5 className="mt-5">Sales My Page</h5>
+            <h5 className="">Sales My Page</h5>
             <span>View And Update Your sales Here   ! </span>
             <Link to={'/sales-add'} className="btn btn-primary float-end">Create Bill</Link>
             <hr className="mt-4" />

@@ -62,7 +62,7 @@ const Sales_my = ({ base_url }) => {
 
     return (
         <div className="container">
-            <h5 className="mt-5">Contact My Page</h5>
+            <h5 className="">Contact My Page</h5>
             <span>View And Update Your Contact's Here   ! </span>
             <Link to={'/contact-add'} className="btn btn-primary float-end">Create Contact</Link>
             <hr className="mt-4" />

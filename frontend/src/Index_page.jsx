@@ -87,14 +87,14 @@ const Index_page = ({ base_url }) => {
 
     return (
         <div
-            className="container mt-4"
+            className="container "
             style={{
                 height: "100%",
                 overflowY: "auto",
                 paddingRight: "15px",
             }}
         >
-            <h3 className="mb-4 mt-3">Dashboard</h3>
+            <h3 className="mb-4 ">Dashboard</h3>
 
 
             <div className="row g-4 mb-4">

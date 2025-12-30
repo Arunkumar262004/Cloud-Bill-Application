@@ -18,6 +18,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login',[Authenticate_controller::class,'login'])->name('Login_page');
 Route::post('/logout',[Authenticate_controller::class,'logout']);
+Route::post('/register',[Authenticate_controller::class,'Register']);
 
 Route::post('/send-otp', [otp_login_page::class, 'generate_otp']);
 Route::post('/confirm-otp', [otp_login_page::class, 'confirm_otp']);

@@ -10,8 +10,13 @@ const Stock_my = ({ base_url }) => {
     var location = useLocation();
 
     function delete_by_id(delete_id) {
-        axios.delete(base_url + `/stock-delete/${delete_id}`).then(() => {
+        axios.delete(base_url + `/stock-delete/${delete_id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`
+            }
+        }).then(() => {
             toast.success(`Stock id ${delete_id} Deleted Successfully`)
+            window.location.reload();
             axios.get(base_url + '/stock-get').then((res) => {
                 SetInput(res.data.data)
             })
@@ -21,14 +26,14 @@ const Stock_my = ({ base_url }) => {
 
 
     useEffect(() => {
-            document.title = "Stock - My";
+        document.title = "Stock - My";
 
         if (location.state?.type == "success") {
             toast.success(location.state.message)
         } else if (location.state?.type == "failed") {
             toast.error(location.state.message)
         }
-        axios.get(base_url + '/stock-get',{
+        axios.get(base_url + '/stock-get', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
@@ -38,11 +43,11 @@ const Stock_my = ({ base_url }) => {
 
 
     }, [base_url, location.state])
-   
+
 
     return (
         <div className="container">
-            <h5 className="mt-5">Stock My Page</h5>
+            <h5 className="">Stock My Page</h5>
             <span>View And Update Your Stock Here   ! </span>
             <Link to={'/stock-add'} className="btn btn-primary float-end">Create Bill</Link>
             <hr className="mt-4" />
@@ -73,7 +78,7 @@ const Stock_my = ({ base_url }) => {
                                 <button onClick={() => { delete_by_id(stock.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
 
                             </td>
-                            
+
                         </tr>
                     ))}
 
