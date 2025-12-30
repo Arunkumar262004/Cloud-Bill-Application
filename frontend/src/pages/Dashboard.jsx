@@ -24,7 +24,14 @@ const Dashboard = ({ base_url }) => {
 
   const [get_email, set_email] = useState(null);
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
+let storedUser = '';
+try {
+  const userData = localStorage.getItem('user');
+  storedUser = userData ? JSON.parse(userData) : '';
+} catch (error) {
+  console.error('Error parsing user from localStorage:', error);
+  storedUser = '';
+}
 
   set_email(storedUser?.value); // only store value object
   }, [])

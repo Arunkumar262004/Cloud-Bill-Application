@@ -70,9 +70,20 @@ $sply_y = $y + 1;
 
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFont('helvetica', 'B', 10.5);
-        $pdf->SetFillColor(37, 150, 190);
+        $pdf->SetFillColor(64, 64, 64);
 
-        $pdf->MultiCell(42.8, 8, 'EMPLOYEE FORM', 0,  'C', true, 0, 100, 5);
+        $pdf->MultiCell(42.8, 8, 'EMPLOYEE FORM', 0,  'C',  true,       // fill
+            0,          // ln (0 = to right)
+            100,        // x
+            5,          // y
+            true,       // reset height
+            0,          // stretch
+            false,      // is HTML
+            true,       // autopadding
+            0,          // max height
+            'M',        // vertical align Middle
+            true        // fit cell
+        );
         $x = 100;
         $y = 10;
         $pdf->SetTextColor(0, 0, 0);

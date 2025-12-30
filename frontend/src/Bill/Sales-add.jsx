@@ -61,8 +61,8 @@ const Sales_add_form = ({ base_url }) => {
     }, []);
     return (
         <div className="container">
-            <div className="mt-5">
-                <h3 className="mt-5">Sales Add</h3>
+            <div className="">
+                <h3 className="">Sales Add</h3>
                 <span>Commercial document that records the products to the customers.</span><hr />
                 <form method="POST" onSubmit={submit_handler} >
 

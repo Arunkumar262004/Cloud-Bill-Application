@@ -51,7 +51,25 @@ class PdfController extends Controller
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFont('helvetica', 'B', 10.5);
 
-        $pdf->MultiCell(42.5, 7, 'Sales Bill', 0,  'C', true, 0, 100, 5);
+$pdf->SetFillColor(108, 117, 125); // info color
+$pdf->MultiCell(
+    42.5,       // width
+    7,          // height
+    'SALES Bill', // text
+    0,          // border
+    'C',        // horizontal center
+    true,       // fill
+    0,          // ln (0 = to right)
+    100,        // x
+    5,          // y
+    true,       // reset height
+    0,          // stretch
+    false,      // is HTML
+    true,       // autopadding
+    0,          // max height
+    'M',        // vertical align Middle
+    true        // fit cell
+);
         $x = 100;
         $y = 10;
         $pdf->SetTextColor(0, 0, 0);

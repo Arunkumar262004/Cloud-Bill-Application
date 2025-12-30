@@ -27,7 +27,7 @@ const Register = ({ base_url }) => {
                 name: name,
                 email: email,
                 password: password,
-                password_confirmation: confirmPassword 
+                password_confirmation: confirmPassword
 
             });
 
@@ -243,7 +243,7 @@ const Register = ({ base_url }) => {
                         </div>
                     </div>
 
-                     {/* Right Side - Login Form */}
+                    {/* Right Side - Login Form */}
                     <div className="col-lg-6 d-flex align-items-center justify-content-center p-2 p-md-2">
                         <div className="w-100" style={{ maxWidth: '480px' }}>
                             {/* Mobile Logo */}
@@ -252,12 +252,13 @@ const Register = ({ base_url }) => {
                             </div>
 
                             <div className="card-modern p-2 p-md-3">
-                                <div className="text-center mb-2">
+                                <Link to={'/login'} className="text-danger float-end" style={{ textDecoration: 'none',fontSize:'20px',fontWeight:'9px' }}>X</Link>
+                                <div className="text-center mb-2 mt-4">
                                     <span className="feature-badge" style={{ padding: '8px 15px', fontSize: '13px', marginBottom: '8px' }}>
                                         <i className="bi bi-shield-lock-fill me-1"></i>
                                         Register Account
                                     </span>
-                                   
+
                                 </div>
 
                                 {/* Error Alert */}
