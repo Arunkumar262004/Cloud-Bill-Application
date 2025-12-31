@@ -54,10 +54,12 @@ class otp_login_page extends Controller
         $token = $user->createToken('LoginToken')->plainTextToken;
 
 
+
         return response()->json([
             "status" => "success",
             "message" => "OTP verified. Logged in successfully",
-            "token"   => $token  // 👈 return token here
+            "token"   => $token,
+            "user" =>$user->name
 
         ]);
     }

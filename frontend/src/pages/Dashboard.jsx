@@ -4,6 +4,19 @@ import { Outlet, Link, useLocation } from "react-router-dom";
 const Dashboard = ({ base_url }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const location = useLocation();
+  const getInitials = (name) => {
+    if (!name) return "";
+
+    return name
+      .replace(/"/g, "") 
+      .trim()
+      .split(" ")
+      .filter(word => word.length > 0)
+      .map(word => word[0].toUpperCase())
+      .slice(0, 2)
+      .join("");
+  };
+
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -24,16 +37,16 @@ const Dashboard = ({ base_url }) => {
 
   const [get_email, set_email] = useState(null);
   useEffect(() => {
-let storedUser = '';
-try {
-  const userData = localStorage.getItem('user');
-  storedUser = userData ? JSON.parse(userData) : '';
-} catch (error) {
-  console.error('Error parsing user from localStorage:', error);
-  storedUser = '';
-}
+    let storedUser = '';
+    try {
+      const userData = localStorage.getItem('user');
+      storedUser = userData ? JSON.parse(userData) : '';
+    } catch (error) {
+      console.error('Error parsing user from localStorage:', error);
+      storedUser = '';
+    }
 
-  set_email(storedUser?.value); // only store value object
+    set_email(storedUser?.value); // only store value object
   }, [])
   return (
     <div style={{
@@ -285,7 +298,7 @@ try {
                   fontSize: "16px",
                   boxShadow: "0 4px 12px rgba(102, 126, 234, 0.3)"
                 }}>
-                  JD
+                  {getInitials(get_email?.name ? get_email?.name : localStorage.getItem('user'))}
                 </div>
 
                 {/* User Info */}
@@ -296,7 +309,7 @@ try {
                     color: "#1e293b",
                     lineHeight: "1.2"
                   }}>
-                    {get_email?.name}
+                    {get_email?.name ? get_email?.name : localStorage.getItem('user')}
                   </div>
                   <div style={{
                     fontSize: "12px",
@@ -357,10 +370,11 @@ try {
                         fontWeight: "700",
                         fontSize: "18px"
                       }}>
-                        JD
+                        {getInitials(get_email?.name ? get_email?.name : localStorage.getItem('user'))}
+
                       </div>
                       <div>
-                        <div style={{ fontSize: "16px", fontWeight: "700" }}>{get_email?.name}</div>
+                        <div style={{ fontSize: "16px", fontWeight: "700" }}>{get_email?.name ? get_email?.name : localStorage.getItem('user')}</div>
                         <div style={{ fontSize: "12px", opacity: 0.9 }}>{get_email?.email}</div>
                       </div>
                     </div>

@@ -84,9 +84,13 @@ const Confirm_otp = ({ base_url_web }) => {
             if (res.data.status === "success") {
                 localStorage.setItem("access_token", res.data.token);
                 localStorage.setItem("user", JSON.stringify(res.data.user));
+                
                 // Clear the stored email after successful login
                 localStorage.removeItem("otp_email");
                 navigate("/dashboard");
+                setTimeout(() => {
+                    window.location.reload();   
+                }, 100);
             } else {
                 navigate('/Login-with-otp', { 
                     state: { message: "Something Went Wrong", type: "otp_failed" } 

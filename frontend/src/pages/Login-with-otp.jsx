@@ -47,9 +47,9 @@ const Login_with_otp = ({ base_url_web }) => {
     useEffect(() => {
         if (!location.state) return;
         if (location.state?.type === "otp_failed") {
-            toast.success(location.state.message);
-        } else {
             toast.error(location.state.message);
+        } else {
+            toast.success(location.state.message);
         }
     }, [location.state]);
 
