@@ -86,8 +86,9 @@ const Sales_add_form = ({ base_url }) => {
     }
     return (
         <div className="container">
-            <h3 className="mt-5">Contact Add</h3>
-            <span>Commercial document that records the products to the customers.</span><hr />
+            <h4 className="">Employee #{id}</h4>
+            {/* <span style={{font:8}}>Commercial document that records the products to the customers.</span> */}
+            <hr />
             <form method="POST" onSubmit={submit_handler} >
 
                 <div className="row">

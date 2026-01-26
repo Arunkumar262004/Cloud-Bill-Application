@@ -8,6 +8,8 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\Stock_controller;
 use App\Http\Controllers\Contact_controller;
 use App\Http\Controllers\Contact_bill_tcpdf;
+use App\Http\Controllers\pay_slip_controller;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +52,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/contact-get-by-id/{id}', [Contact_controller::class, 'Contact_get_value_in_db']);
     Route::put('/contact-update/{id}', [Contact_controller::class, 'Contact_update']);
     Route::delete('/contact-delete/{id}', [Contact_controller::class, 'Contact_delete']);
+
+
+    Route::post('/payslip-store', [pay_slip_controller::class, 'Store_payslip']);
+    Route::get('/payslip-get', [pay_slip_controller::class, 'Get_payslip']);
+    Route::delete('/payslip-delete/{id}', [pay_slip_controller::class, 'Delete_payslip_id']);
+    Route::delete('/payslip-get_id/{id}', [pay_slip_controller::class, 'Get_payslip_by_id']);
+    
+
 
 });

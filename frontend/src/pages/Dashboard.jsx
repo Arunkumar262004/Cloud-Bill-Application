@@ -184,7 +184,7 @@ const Dashboard = ({ base_url }) => {
               margin: 0,
               letterSpacing: "-0.5px"
             }}>
-              CloudBill Pro
+              Cloud Bill
             </h1>
             <p style={{
               fontSize: "13px",
@@ -393,7 +393,7 @@ const Dashboard = ({ base_url }) => {
 
                   {/* Menu Items */}
                   <div style={{ padding: "8px" }}>
-                    <Link to="/profile" style={{
+                    <Link to="/my-account" style={{
                       display: "flex",
                       alignItems: "center",
                       gap: "12px",

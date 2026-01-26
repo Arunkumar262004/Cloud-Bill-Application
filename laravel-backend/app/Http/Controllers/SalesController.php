@@ -72,7 +72,7 @@ class SalesController extends Controller
         if ($sale) {
             $request->validate([
                 'product_name'    => 'required|string|max:255',
-                'product_code'    => 'required|string|max:100',
+                'product_code'    => 'required|integer|max:100',
                 'customer_name'   => 'required|string|max:255',
                 'product_qty'     => 'required|integer|min:1',
                 'price'           => 'required|numeric|min:0'

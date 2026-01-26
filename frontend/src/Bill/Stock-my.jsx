@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import '../App.css';
 const Stock_my = ({ base_url }) => {
 
     var [input, SetInput] = useState([]);
@@ -49,8 +49,9 @@ const Stock_my = ({ base_url }) => {
         <div className="container">
             <h5 className="">Stock My Page</h5>
             <span>View And Update Your Stock Here   ! </span>
-            <Link to={'/stock-add'} className="btn btn-primary float-end">Create Bill</Link>
-            <hr className="mt-4" />
+            <Link to="/stock-add" className="btn btn-primary float-end btn-hover-black">
+                Create Bill
+            </Link>            <hr className="mt-4" />
             <div className="row">
                 <div className="col"></div>
             </div>

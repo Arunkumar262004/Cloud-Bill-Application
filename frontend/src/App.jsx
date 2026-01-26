@@ -18,6 +18,8 @@ import Contact_my from './Contact/Contact_my';
 import Contact_add from './Contact/Contact_add';
 import Contact_edit from './Contact/Contact_edit';
 import Register from './pages/Register-form'
+import Payslip_my from './Bill/Payslip_my'
+import My_profile from './pages/My_profile'
 
 
 
@@ -67,6 +69,9 @@ function App() {
             <Route path='/contact' element={<Contact_my base_url={base_url}/>} />
             <Route path='/contact-add' element={<Contact_add base_url={base_url}/>} />
             <Route path='/contact-edit/:id' element={<Contact_edit base_url={base_url} />} />
+
+            <Route path='/payslip_my' element={<Payslip_my base_url={base_url}/>} />
+            <Route path='/my-account' element={<My_profile base_url={base_url}/>} />
 
           </Route>
         )}

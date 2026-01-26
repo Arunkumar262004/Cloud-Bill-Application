@@ -21,9 +21,9 @@ const Sales_add_form = ({ base_url }) => {
   function onchange_handler(e) {
     setInputs({ ...input, [e.target.name]: e.target.value });
   }
-   useEffect(() => {
-              document.title = "Contact List - Add";
-   },[]);
+  useEffect(() => {
+    document.title = "Contact List - Add";
+  }, []);
 
   function imageChangeHandler(e) {
     const file = e.target.files[0];
@@ -50,7 +50,8 @@ const Sales_add_form = ({ base_url }) => {
       .post(base_url + "/store-contact", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-           "Content-Type": "multipart/form-data"        },
+          "Content-Type": "multipart/form-data"
+        },
       })
       .then((res) => {
         if (res.data.status === "success") {
@@ -73,94 +74,103 @@ const Sales_add_form = ({ base_url }) => {
 
   return (
     <div className="container">
-      <h3 className="mt-5">Contact Add</h3>
+      {/* <h3 className="">Employee Add</h3>
       <span>Commercial document that records the products to the customers.</span>
-      <hr />
+      <hr /> */}
 
       <form onSubmit={submit_handler} encType="multipart/form-data">
-        <div className="row">
-          <div className="col-md-8">
+        <div className="card shadow-sm">
+          {/* <div className="card-header">
+            <h5 className="mb-0">Employee Details</h5>
+          </div> */}
+
+          <div className="card-body">
             <div className="row">
-              <div className="col-md-6 form-group">
-                <label>Employee Name</label>
-                <input
-                  className="form-control"
-                  name="employee_name"
-                  onChange={onchange_handler}
-                  type="text"
-                />
+              {/* Form section */}
+              <div className="col-md-8">
+                <div className="row">
+                  <div className="col-md-4 form-group mb-3">
+                    <label>Employee Name</label>
+                    <input
+                      className="form-control"
+                      name="employee_name"
+                      onChange={onchange_handler}
+                      type="text"
+                    />
+                  </div>
+
+                  <div className="col-md-4 form-group mb-3">
+                    <label>Employee Code</label>
+                    <input
+                      className="form-control"
+                      name="employee_code"
+                      onChange={onchange_handler}
+                      type="text"
+                    />
+                  </div>
+
+                  <div className="col-md-4 form-group mb-3">
+                    <label>Mobile</label>
+                    <input
+                      className="form-control"
+                      name="mobile"
+                      onChange={onchange_handler}
+                      type="text"
+                    />
+                  </div>
+
+                  <div className="col-md-4 form-group mb-3">
+                    <label>Place</label>
+                    <input
+                      className="form-control"
+                      name="place"
+                      onChange={onchange_handler}
+                      type="text"
+                    />
+                  </div>
+
+                  <div className="col-md-4 form-group mb-3">
+                    <label>Marital Status</label>
+                    <select
+                      className="form-control"
+                      name="maritial_status"
+                      onChange={onchange_handler}
+                    >
+                      <option value="">Select</option>
+                      <option value="Single">Single</option>
+                      <option value="Married">Married</option>
+                    </select>
+                  </div>
+                </div>
               </div>
 
-              <div className="col-md-6 form-group">
-                <label>Employee Code</label>
-                <input
-                  className="form-control"
-                  name="employee_code"
-                  onChange={onchange_handler}
-                  type="text"
-                />
+              {/* Image section */}
+              <div className="col-md-4">
+                <div className="border rounded p-3 text-center h-100">
+                  <span className="fw-bold">Profile Image</span>
+
+                  <div className="d-flex flex-column align-items-center mt-3">
+                    <img
+                      src={previewImg || ""}
+                      alt=""
+                      style={{
+                        width: "130px",
+                        height: "130px",
+                        marginBottom: "10px",
+                        borderRadius: "8%",
+                        objectFit: "cover",
+                      }}
+                    />
+
+                    <input
+                      type="file"
+                      className="form-control"
+                      name="img_file"
+                      onChange={imageChangeHandler}
+                    />
+                  </div>
+                </div>
               </div>
-
-              <div className="col-md-6 form-group">
-                <label>Mobile</label>
-                <input
-                  className="form-control"
-                  name="mobile"
-                  onChange={onchange_handler}
-                  type="text"
-                />
-              </div>
-
-              <div className="col-md-6 form-group">
-                <label>Place</label>
-                <input
-                  className="form-control"
-                  name="place"
-                  onChange={onchange_handler}
-                  type="text"
-                />
-              </div>
-
-              <div className="col-md-6 form-group">
-                <label>Maritial Status</label>
-                <select
-                  className="form-control"
-                  name="maritial_status"
-                  onChange={onchange_handler}
-                >
-                  <option value="">Select</option>
-                  <option value="Single">Single</option>
-                  <option value="Married">Married</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Image section */}
-          <div className="col-md-4 row">
-            <div className="col-md-12 text-center">
-              <span>Profile Image</span>
-            </div>
-
-            <div className="d-flex flex-column align-items-center">
-              <img
-                src={previewImg || ""}
-                alt=""
-                style={{
-                  width: "130px",
-                  height: "130px",
-                  marginBottom: "10px",
-                  borderRadius: "8%",
-                  objectFit: "cover",
-                }}
-              />
-
-              <input
-                type="file"
-                className="form-control"
-                name="img_file"
-                onChange={imageChangeHandler}
-              />
             </div>
           </div>
         </div>

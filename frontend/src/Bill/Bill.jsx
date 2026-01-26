@@ -15,7 +15,6 @@ const Bill_My = () => {
 
                 <div className="col-md-3">
                     <Link to="/sales-my" style={{ textDecoration : 'none'}}>
-
                         <div className="p-3 card me-2 d-flex flex-row align-items-center">
                             <i className="bi bi-receipt fs-2 me-3"></i>
                             <div className="">
@@ -24,12 +23,10 @@ const Bill_My = () => {
                             </div>
                         </div>
                     </Link>
-
                 </div>
 
                 <div className="col-md-3 ">
                     <Link to="/stock-my" style={{ textDecoration : 'none'}}>
-
                         <div className="me-3 card p-3 d-flex flex-row  align-items-center ">
                             <i className="bi bi-box-seam fs-2 me-3"></i>
                             <div className="ml-2">
@@ -39,7 +36,18 @@ const Bill_My = () => {
 
                         </div>
                     </Link>
+                </div>
 
+                 <div className="col-md-3 ">
+                    <Link to="/payslip_my" style={{ textDecoration : 'none'}}>
+                        <div className="me-3 card p-3 d-flex flex-row  align-items-center ">
+                            <i class="bi bi-wallet2 fs-2 me-3"></i>
+                            <div className="ml-2">
+                                <span className="fw-bold">Payslip</span><br />
+                                <small>Access Your Payslip Here</small>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>
