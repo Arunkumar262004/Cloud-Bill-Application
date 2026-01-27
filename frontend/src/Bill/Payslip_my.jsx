@@ -154,60 +154,62 @@ const Payslip_my = ({ base_url }) => {
             {/*  modal ---------- */}
             {showModal && (
                 <div className="modal fade show d-block" tabIndex="-1">
-                    <div className="modal-dialog">
+                    <div className="modal-dialog modal-lg ">
                         <div className="modal-content">
 
                             <div className="modal-header">
                                 <h5 className="modal-title">Generate Payslip</h5>
                                 <button
-                                    className="btn btn-primary float-end"
+                                    className="btn btn-danger float-end"
                                     onClick={() => {
                                         setIsEdit(false);
                                         setEditId(null);
-                                        setFormData({ emp_name: "", emp_code: "", salary: "" });
-                                        setShowModal(true);
+                                        setShowModal(false);
                                     }}
-                                ></button>
+                                >X</button>
                             </div>
 
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
+                                    <div className="row">
 
-                                    <div className="mb-3">
-                                        <label className="form-label">Employee Name</label>
-                                        <input
-                                            type="text"
-                                            name="emp_name"
-                                            className="form-control"
-                                            onChange={handleChange}
-                                            value={formData.emp_name}
-                                            required
-                                        />
+                                        <div className="mb-3 col-md-6">
+                                            <label className="form-label">Employee Name</label>
+                                            <input
+                                                type="text"
+                                                name="emp_name"
+                                                className="form-control"
+                                                onChange={handleChange}
+                                                value={formData.emp_name}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className="mb-3 col-md-6">
+                                            <label className="form-label">Employee Code</label>
+                                            <input
+                                                type="text"
+                                                name="emp_code"
+                                                className="form-control"
+                                                onChange={handleChange}
+                                                value={formData.emp_code}
+                                                required
+                                            />
+                                        </div>
+
+                                        <div className="mb-3 col-md-6">
+                                            <label className="form-label">Salary</label>
+                                            <input
+                                                type="number"
+                                                name="salary"
+                                                className="form-control"
+                                                onChange={handleChange}
+                                                required
+                                                value={formData.salary}
+                                            />
+                                        </div>
                                     </div>
 
-                                    <div className="mb-3">
-                                        <label className="form-label">Employee Code</label>
-                                        <input
-                                            type="text"
-                                            name="emp_code"
-                                            className="form-control"
-                                            onChange={handleChange}
-                                            value={formData.emp_code}
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="mb-3">
-                                        <label className="form-label">Salary</label>
-                                        <input
-                                            type="number"
-                                            name="salary"
-                                            className="form-control"
-                                            onChange={handleChange}
-                                            required
-                                            value={formData.salary}
-                                        />
-                                    </div>
 
                                 </div>
 

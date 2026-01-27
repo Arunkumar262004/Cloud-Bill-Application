@@ -86,8 +86,6 @@ const total_val = Sales_data.reduce(
                         <th>Product Code</th>
                         <th>Qty</th>
                         <th>Action</th>
-
-
                     </tr>
                 </thead>
                 <tbody>
