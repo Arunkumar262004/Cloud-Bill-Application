@@ -13,7 +13,7 @@ class Contact_controller extends Controller
     {
         $request->validate([
             'employee_name'    => 'required|string|max:255',
-            'employee_code'    => 'required|integer',
+            'employee_code'    => 'required|integer|unique:Contact_table',
             'mobile'   => 'integer',
             'place'     => 'string',
             'maritial_status'           => 'string',
@@ -70,6 +70,7 @@ class Contact_controller extends Controller
             $request->validate([
                 'employee_name' => 'string|max:255',
                 'employee_code' => 'integer',
+                "employee_code" => "integer|unique:Contact_table,employee_code," . $contact,
                 'mobile' => 'integer',
                 'place' => 'string',
                 'maritial_status' => 'string',

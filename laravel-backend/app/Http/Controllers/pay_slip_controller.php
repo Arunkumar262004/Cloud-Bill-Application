@@ -68,4 +68,30 @@ class pay_slip_controller extends Controller
             ]);
         }
     }
+
+
+    public function Update_user_by_id(Request $request, $id)
+    {
+
+        $user_id = payslip_tbl::find($id);
+        if ($user_id) {
+
+            $request->validate([
+                "emp_name" => "required|string",
+                "emp_code" => "required|integer|unique:pay_slip_data_table,emp_code," . $id,
+                "salary" => "required|integer"
+            ]);
+
+            $user_id->update([
+                "emp_name" => $request->emp_name,
+                "emp_code" => $request->emp_code,
+                "salary" => $request->salary
+            ]);
+
+            return response()->json([
+                "success" => "true",
+                "message" => "Payslip Updated Successfully"
+            ]);
+        }
+    }
 }

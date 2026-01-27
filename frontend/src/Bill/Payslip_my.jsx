@@ -25,7 +25,7 @@ const Payslip_my = ({ base_url }) => {
         e.preventDefault();
 
         const url = isEdit
-            ? `${base_url}/payslip-update/${editId}`
+            ? `${base_url}/update_payslip-id/${editId}`
             : `${base_url}/payslip-store`;
 
         const method = isEdit ? axios.put : axios.post;
@@ -134,7 +134,7 @@ const Payslip_my = ({ base_url }) => {
                                 <button
                                     className="btn btn-success me-2"
                                     onClick={() => openEditModal(payslip)}
-                                ></button>
+                                ><i class="bi bi-pencil-square"></i></button>
                                 <button onClick={() => { delete_by_id(payslip.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
                             </td>
                         </tr>

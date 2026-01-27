@@ -57,7 +57,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/payslip-store', [pay_slip_controller::class, 'Store_payslip']);
     Route::get('/payslip-get', [pay_slip_controller::class, 'Get_payslip']);
     Route::delete('/payslip-delete/{id}', [pay_slip_controller::class, 'Delete_payslip_id']);
-    Route::delete('/payslip-get_id/{id}', [pay_slip_controller::class, 'Get_payslip_by_id']);
+    Route::get('/payslip-get_id/{id}', [pay_slip_controller::class, 'Get_payslip_by_id']);
+    Route::put('/update_payslip-id/{id}', [pay_slip_controller::class, 'Update_user_by_id']);
     
 
 

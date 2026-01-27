@@ -58,6 +58,10 @@ const Sales_my = ({ base_url }) => {
         window.open(url, "_blank");
     };
 
+const total_val = Sales_data.reduce(
+  (sum, sale) => sum + Number(sale.product_qty),
+  0
+);
     return (
         <div className="container">
             <style>{`
@@ -73,7 +77,7 @@ const Sales_my = ({ base_url }) => {
             <div className="row">
                 <div className="col"></div>
             </div>
-            <table className="table table-striped table-bordered mt-3">
+            <table className="table table-striped table-bordered mt-3" style={{borderRadius:"8px;"}}>
                 <thead className="table-dark">
                     <tr >
                         <th>Id</th>
@@ -82,7 +86,6 @@ const Sales_my = ({ base_url }) => {
                         <th>Product Code</th>
                         <th>Qty</th>
                         <th>Action</th>
-                        <th>Print</th>
 
 
                     </tr>
@@ -94,22 +97,25 @@ const Sales_my = ({ base_url }) => {
                             <td>{sale.customer_name}</td>
                             <td>{sale.product_name}</td>
                             <td>{sale.product_code}</td>
-                            <td>{sale.product_qty}</td>
+                            <td className="text-center">{(sale.product_qty).toFixed(2)}</td>
                             <td>
                                 <Link to={`/sales-edit/${sale.id}`} className="btn btn-success me-2 edit-btn"><i class="bi bi-pencil-square"></i></Link>
-                                <button onClick={() => { delete_by_id(sale.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
-
-                            </td>
-                            <td>
-                                <button onClick={() => downloadPDF(sale.id)} className="">
-                                    <i className="bi bi-printer-fill fs-2 border-0 bg-transparent focus:outline-none"></i>
-                                </button>
-
+                                <button onClick={() => { delete_by_id(sale.id) }} className="btn btn-danger ml-2 me-2"><i class="bi bi-trash-fill"></i></button>
+                                <a onClick={() => downloadPDF(sale.id)} className="btn btn-dark   focus:outline-none ml-2 "><i className="bi bi-printer-fill hover:text-dark"></i></a>
                             </td>
                         </tr>
                     ))}
 
                 </tbody>
+                <tfoot className="bg-secondary">
+                    <td className="text-white text-center">TOTAL</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td className="text-white text-center">{total_val.toFixed(2)}</td>
+                    <td></td>
+
+                </tfoot>
 
             </table>
             <div>
