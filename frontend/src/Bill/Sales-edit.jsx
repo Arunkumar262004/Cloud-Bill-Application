@@ -4,8 +4,10 @@ import axios from 'axios'; // ✅ Import axios globally
 
 const Sales_editform = ({ base_url }) => {
 
+    const [Customer_name_val, setCustomerName] = useState("");
+
     var navigate = useNavigate();
-    const [input, SetInputs] = useState(
+    const [rows, Setrows] = useState([
         {
             product_name: '',
             product_code: '',
@@ -13,22 +15,42 @@ const Sales_editform = ({ base_url }) => {
             customer_name: '',
             price: ''
         }
+    ]
     )
 
+    const addRow = () => {
+        Setrows([
+            ...rows,
+            {
+                product_name: "",
+                product_code: "",
+                product_qty: "",
+                price: ""
+            }
+        ]);
+    };
 
-    function onchange_handler(event) {
-        SetInputs({ ...input, [event.target.name]: event.target.value })
+    
+    const removeRow = (index) => {
+        const updatedRows = rows.filter((_, i) => i !== index);
+        Setrows(updatedRows);
+    };
+    function handleRowChange(index, e) {
+        const { name, value } = e.target;
+        const updated_rows = [rows];
+        updated_rows[index][name] = value;
+        Setrows(updated_rows);
     }
-    const { id } = useParams(); // id will contain your route param
+    const { id } = useParams();
 
     function submit_handler(e) {
         e.preventDefault();
         var post_sales = {
-            'product_name': input.product_name,
-            'product_code': input.product_code,
-            'customer_name': input.customer_name,
-            'product_qty': input.product_qty,
-            'price': input.price
+            'product_name': rows.product_name,
+            'product_code': rows.product_code,
+            'customer_name': rows.customer_name,
+            'product_qty': rows.product_qty,
+            'price': rows.price
 
         }
         axios.put(base_url + '/sales-update/' + id, post_sales, {
@@ -50,14 +72,15 @@ const Sales_editform = ({ base_url }) => {
     }
 
     useEffect(() => {
-        document.title = "Sales - Update  # "+id;
+        document.title = "Sales - Update  # " + id;
 
         axios.get(base_url + '/sales-get-by-id/' + id, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((res) => {
-            SetInputs(res.data.data)
+            Setrows(res.data.product_data)
+            setCustomerName(res.data.data)
         })
     }, [base_url])
 
@@ -65,45 +88,110 @@ const Sales_editform = ({ base_url }) => {
     return (
         <div className="container">
             <div className="">
-                <h3 className="mt-3">Sales Add</h3>
+                <h5 className="">Sales Add</h5>
                 <span>Commercial document that records the products to the customers.</span><hr />
                 <form method="POST" onSubmit={submit_handler} >
-
-                    <div className="row">
-
-                        <div className="col-md-3 form-group">
-                            <label className="">Product Name</label>
-                            <select className="form-control" value={input.product_name} onChange={onchange_handler} type="text" name="product_name" id="product_name" >
-
-                                <option></option>
-                                <option>Pipes</option>
-                                <option>Drum</option>
-                                <option>Switch Box</option>
-
-                            </select>
+                    <div className="row mb-3">
+                        <div className="col-md-4">
+                            <label>Customer Name</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={Customer_name_val.customer_name}
+                                onChange={(e) => setCustomerName(e.target.value)}
+                                required
+                            />
                         </div>
-                        <div className="col-md-3 form-group">
-                            <label className="">Product Code</label>
-                            <input className="form-control" value={input.product_code} onChange={onchange_handler} type="text" name="product_code" id="product_code" />
-                        </div>
-                        <div className="col-md-3 form-group">
-                            <label className="">Qty</label>
-                            <input className="form-control" value={input.product_qty} onChange={onchange_handler} type="text" name="product_qty" id="product_qty" />
-                        </div>
+                    </div>
+                   
+ <button
+                        type="button"
+                        className="btn btn-outline-primary mb-1 float-end fs-6"
+                        onClick={addRow}
+                    >
+                        <i className="bi bi-plus-lg"></i>
+                    </button>
+                        <table className="table table-bordered">
 
-                        <div className="col-md-3 form-group">
-                            <label className="">Price</label>
-                            <input className="form-control" value={input.price} onChange={onchange_handler} type="text" name="price" id="price" />
-                        </div>
-                        <div className="col-md-3 form-group">
-                            <label className="">Customer Name</label>
-                            <input className="form-control" value={input.customer_name} onChange={onchange_handler} type="text" name="customer_name" id="customer_name" />
-                        </div>
+                            <thead className="table-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Product Code</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th width="120">Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {rows.map((row, index) => (
+                                    <tr key={index}>
+                                        <td>
+                                            <select
+                                                className="form-control"
+                                                name="product_name"
+                                                value={row.item_name}
+                                                onChange={(e) => (index, e)}
+                                                required
+                                            >
+                                                <option value="">Select</option>
+                                                <option>Pipes</option>
+                                                <option>Drum</option>
+                                                <option>Switch Box</option>
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                name="product_code"
+                                                value={row.item_code}
+                                                onChange={(e) => handleRowChange(index, e)}
+                                                required
+                                            />
+                                        </td>
+
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="product_qty"
+                                                value={row.qty}
+                                                onChange={(e) => handleRowChange(index, e)}
+                                                required
+                                            />
+                                        </td>
+
+                                        <td>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                name="price"
+                                                value={row.price}
+                                                onChange={(e) => handleRowChange(index, e)}
+                                                required
+                                            />
+                                        </td>
+
+                                        <td className="text-center">
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => removeRow(index)}
+                                            >
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                         <div className="col-md-12 mt-3">
                             <button type="submit" className="btn btn-success float-end">Save</button>
 
                         </div>
-                    </div>
 
                 </form>
             </div>

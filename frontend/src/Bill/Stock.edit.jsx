@@ -62,7 +62,7 @@ const Stock_editform = ({ base_url }) => {
 
     return (
         <div className="container">
-            <h3 className="mt-3">Stock Update</h3>
+            <h5 className="mt-3">Stock Update</h5>
             <span>Commercial document that records the products to the customers.</span><hr />
             <form method="POST" onSubmit={submit_handler} >
 

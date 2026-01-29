@@ -80,11 +80,9 @@ const total_val = Sales_data.reduce(
             <table className="table table-striped table-bordered mt-3" style={{borderRadius:"8px;"}}>
                 <thead className="table-dark">
                     <tr >
-                        <th>Id</th>
+                        <th>Sale Id</th>
                         <th>Customer Name</th>
-                        <th>Product Name</th>
-                        <th>Product Code</th>
-                        <th>Qty</th>
+                        <th>Price</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -93,9 +91,8 @@ const total_val = Sales_data.reduce(
                         <tr key={sale.id}>
                             <td>{sale.id}</td>
                             <td>{sale.customer_name}</td>
-                            <td>{sale.product_name}</td>
-                            <td>{sale.product_code}</td>
-                            <td className="text-center">{(sale.product_qty).toFixed(2)}</td>
+                          
+                            <td className="text-center">{(sale.price)}</td>
                             <td>
                                 <Link to={`/sales-edit/${sale.id}`} className="btn btn-success me-2 edit-btn"><i class="bi bi-pencil-square"></i></Link>
                                 <button onClick={() => { delete_by_id(sale.id) }} className="btn btn-danger ml-2 me-2"><i class="bi bi-trash-fill"></i></button>
@@ -105,15 +102,7 @@ const total_val = Sales_data.reduce(
                     ))}
 
                 </tbody>
-                <tfoot className="bg-secondary">
-                    <td className="text-white text-center">TOTAL</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="text-white text-center">{total_val.toFixed(2)}</td>
-                    <td></td>
-
-                </tfoot>
+              
 
             </table>
             <div>

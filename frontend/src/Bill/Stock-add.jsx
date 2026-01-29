@@ -53,7 +53,7 @@ const Stock_add_form = ({ base_url }) => {
 
     return (
         <div className="container">
-            <h3 className="">Stock Add</h3>
+            <h5 className="">Stock Add</h5>
             <span>Add Your Stock Details Here.</span><hr />
             <form method="POST" onSubmit={submit_handler} >
 
