@@ -11,8 +11,8 @@ class PdfController extends Controller
 {
     public function downloadPDF($id)
     {
-        // Fetch record from database
-        $sale_products = DB::select("SELECT * FROM sales_items WHERE sale_id=$id");
+        // Fetch record from database - FIXED: Use parameter binding to prevent SQL injection
+        $sale_products = DB::select("SELECT * FROM sales_items WHERE sale_id = ?", [$id]);
         
         $sale = Sales::find($id);
 
@@ -20,95 +20,90 @@ class PdfController extends Controller
             return response()->json(['error' => 'Sale not found'], 404);
         }
 
-        // Create new PDF document
+        // new PDF document
         $pdf = new TCPDF('P', 'mm', 'A5', true, 'UTF-8', false);
         $pdf->SetCreator('Laravel TCPDF');
         $pdf->SetAuthor('Your Company');
         $pdf->SetTitle('Sales Bill #' . $id);
         $pdf->SetMargins(15, 15, 15);
-        $pdf->setPrintHeader(false); // removes top header line
-        $pdf->setPrintFooter(false); // removes bottom footer line
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
 
         $pdf->AddPage();
-        // Draw full-page border
+        
+        // full-page border
         $pdf->SetLineWidth(0.5);
         $pdf->SetDrawColor(0, 0, 0);
         $w = $pdf->getPageWidth() - 10;
         $h = $pdf->getPageHeight() - 10;
         $pdf->Rect(5, 5, $w, $h, 'D');
 
-
-
-        // Title
+        // Header section
         $pdf->SetFillColor(108, 117, 125);
         $pdf->SetTextColor(0, 0, 0);
-        $x = 6;
         $pdf->SetFont('helvetica', 'B', 9.5);
 
         $y = 5;
-        $pdf->MultiCell(52, 7, 'To : ', 0,  'L', false, 0, $x, $y);
-        $x = 8.5;
+        $pdf->MultiCell(52, 7, 'To : ', 0, 'L', false, 1, 6, $y);
+        
+        $y += 5;
+        $pdf->MultiCell(0, 7, 'Customer Name: ' . $sale->customer_name, 0, 'L', false, 1, 8.5, $y);
 
-        $pdf->MultiCell(0, 7, 'Customer Name:' . $sale->customer_name, 0,  'L', false, 0, $x, $y += 5);
-
+        // Sales Bill header
         $pdf->SetTextColor(255, 255, 255);
         $pdf->SetFont('helvetica', 'B', 10.5);
-
-        $pdf->SetFillColor(108, 117, 125); // info color
-        $pdf->MultiCell(
-            42.5,
-            7,
-            'SALES Bill', // text
-            0,
-            'C',
-            true,
-            0,
-            100,
-            5,
-            true,
-            0,
-            false,
-            true,
-            0,
-            'M',
-            true
-        );
-        $x = 100;
-        $y = 10;
+        $pdf->SetFillColor(108, 117, 125); 
+        $pdf->MultiCell(42.5, 7, 'SALES Bill', 0, 'C', true, 1, 100, 5);
+        
+        // Bill details
+        $y = 13;
         $pdf->SetTextColor(0, 0, 0);
         $pdf->SetFont('helvetica', '', 9);
+        $pdf->MultiCell(0, 7, 'Bill No : ' . $sale->id, 0, 'L', false, 1, 100, $y);
+        
+        $y += 5;
+        $pdf->MultiCell(0, 7, 'Bill Date : ' . $sale->created_at, 0, 'L', false, 1, 100, $y);
 
-        $pdf->MultiCell(0, 7, 'Bill No : ' . $sale->id, 0,  'L', false, 0, $x, $y += 3);
-
-        $pdf->MultiCell(0, 7, 'Bill Date : ' . $sale->created_at, 0,  'L', false, 0, $x, $y += 5);
-        $pdf->SetFont('helvetica', '', 12);
-
-        // Function to make labeled rows neatly
-
-
-        $pdf->SetTextColor(0, 0, 0);
-
-        $x = 5;
+        // Table header - FIXED: Proper column widths and positions
+        $y = 33;
         $pdf->SetTextColor(255, 255, 255);
-
-        $pdf->SetFont('helvetica', '', 9);
-        $pdf->MultiCell(0, 7, 'Product Name  ', 0,  'L', true, 0, $x, $y += 10);
-        $pdf->MultiCell(0, 7, 'Product Qty  ', 0,  'C', true, 0, $x += 15, $y);
-        $pdf->MultiCell(0, 7, 'Price        ', 0,  'C', true, 0, $x += 52.5, $y);
-        $pdf->MultiCell(0, 7, 'Total        ', 0,  'C', true, 0, $x += 70, $y);
-        $pdf->SetTextColor(0, 0, 0);
-
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->SetFillColor(108, 117, 125);
+        
+        // Define column positions and widths
+        $col1_x = 6;
+        $col1_w = 75;
+        $col2_x = $col1_x + $col1_w;
+        $col2_w = 20;
+        $col3_x = $col2_x + $col2_w;
+        $col3_w = 25;
+        $col4_x = $col3_x + $col3_w;
+        $col4_w = 25;
+        
+        $pdf->MultiCell($col1_w, 7, 'Product Name', 1, 'L', true, 0, $col1_x, $y);
+        $pdf->MultiCell($col2_w, 7, 'Qty', 1, 'C', true, 0, $col2_x, $y);
+        $pdf->MultiCell($col3_w, 7, 'Price', 1, 'C', true, 0, $col3_x, $y);
+        $pdf->MultiCell($col4_w, 7, 'Total', 1, 'C', true, 0, $col4_x, $y);
+        
+        // Table data - FIXED: Increment Y and reset X for each row
         $y += 7;
-        $x = 5;
+        $pdf->SetTextColor(0, 0, 0);
+        $pdf->SetFont('helvetica', '', 9);
+        
         foreach ($sale_products as $sale_prod) {
-
-            $pdf->SetFont('helvetica', '', 9);
-            $pdf->MultiCell(0, 7,  $sale_prod->item_name . '-' . $sale_prod->item_code, 0,  'L', false, 0, $x, $y);
-            $pdf->MultiCell(0, 7, $sale_prod->qty, 0,  'C', false, 0,  $x += 15, $y);
-            $pdf->MultiCell(0, 7, $sale_prod->price, 0,  'C', false, 0, $x += 52.5, $y);
-            $pdf->MultiCell(0, 7, $sale_prod->total, 0,  'C', false, 0, $x += 70, $y);
+            $pdf->MultiCell($col1_w, 7, $sale_prod->item_name . '-' . $sale_prod->item_code, 1, 'L', false, 0, $col1_x, $y);
+            $pdf->MultiCell($col2_w, 7, $sale_prod->qty, 1, 'C', false, 0, $col2_x, $y);
+            $pdf->MultiCell($col3_w, 7, number_format($sale_prod->price, 2), 1, 'R', false, 0, $col3_x, $y);
+            $pdf->MultiCell($col4_w, 7, number_format($sale_prod->total, 2), 1, 'R', false, 0, $col4_x, $y);
+            
+            $y += 7; // FIXED: Increment Y position for next row
         }
-        // Output PDF directly for download
+        
+        // Total row (optional)
+        $pdf->SetFont('helvetica', 'B', 9);
+        $pdf->MultiCell($col1_w + $col2_w + $col3_w, 7, 'Grand Total', 1, 'R', false, 0, $col1_x, $y);
+        $pdf->MultiCell($col4_w, 7, number_format($sale->total ?? 0, 2), 1, 'R', false, 0, $col4_x, $y);
+
         $pdfContent = $pdf->Output("sale-$id.pdf", 'S');
 
         return response($pdfContent)

@@ -109,56 +109,73 @@ class SalesController extends Controller
 
     /* ===================== UPDATE SINGLE ROW ===================== */
     public function Sales_update(Request $request, $id)
-    {
-        $sale = Sales::find($id);
+{
+    $request->validate([
+        'customer_name'           => 'required|string',
+        'items'                   => 'required|array',
+        'items.*.id'              => 'required|integer',
+        'items.*.product_name'    => 'required|string',
+        'items.*.product_code'    => 'required|string',
+        'items.*.product_qty'     => 'required|integer',
+        'items.*.price'           => 'required|numeric',
+    ]);
 
-        if (!$sale) {
-            return response()->json(['status' => 'failed'], 404);
-        }
+    DB::beginTransaction();
 
-        $request->validate([
-            'product_name'    => 'required|string|max:255',
-            'product_code'    => 'required|integer',
-            'customer_name'   => 'required|string|max:255',
-            'product_qty'     => 'required|integer|min:1',
-            'price'           => 'required|numeric|min:0'
+    try {
+
+        // 1️⃣ Update main sale
+        $sale = Sales::findOrFail($id);
+        $sale->update([
+            'customer_name' => $request->customer_name,
         ]);
 
-        DB::beginTransaction();
+        // 2️⃣ Update each item + adjust stock
+        foreach ($request->items as $item) {
 
-        try {
-            $stock = Stock::where('product_name', $sale->product_name)->lockForUpdate()->first();
+            // get old item row
+            $oldItem = Sales_product_model::where('id', $item['id'])
+                ->where('sale_id', $id)
+                ->firstOrFail();
 
-            // Return old qty to stock
-            $stock->stock_qty += $sale->product_qty;
+            $oldQty = $oldItem->qty;
+            $newQty = $item['product_qty'];
 
-            if ($stock->stock_qty < $request->product_qty) {
-                DB::rollBack();
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Insufficient stock'
-                ], 400);
+            // get stock
+            $stock = Stock::where('product_name', $oldItem->item_name)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            // adjust stock (increase / decrease)
+            $stock->stock_qty = $stock->stock_qty + $oldQty - $newQty;
+
+            if ($stock->stock_qty < 0) {
+                throw new \Exception('Insufficient stock for ' . $oldItem->item_name);
             }
 
-            // Deduct new qty
-            $stock->stock_qty -= $request->product_qty;
             $stock->save();
 
-            $sale->update([
-                'product_name'  => $request->product_name,
-                'product_code'  => $request->product_code,
-                'customer_name' => $request->customer_name,
-                'product_qty'   => $request->product_qty,
-                'price'         => $request->price
+            // update item
+            $oldItem->update([
+                'item_name' => $item['product_name'],
+                'item_code' => $item['product_code'],
+                'qty'       => $newQty,
+                'price'     => $item['price'],
             ]);
-
-            DB::commit();
-            return response()->json(['status' => 'success']);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['status' => 'error'], 500);
         }
+
+        DB::commit();
+        return response()->json(['status' => 'success']);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'status' => 'error',
+            'message' => $e->getMessage()
+        ], 400);
     }
+}
+
 
     /* ===================== DELETE ===================== */
     public function Sales_delete($id)

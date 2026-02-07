@@ -14,6 +14,18 @@ const Payslip_my = ({ base_url }) => {
         salary: ""
     });
 
+    useEffect(() => {
+  if (showModal) {
+    document.body.classList.add('blur-background');
+  } else {
+    document.body.classList.remove('blur-background');
+  }
+  
+  return () => {
+    document.body.classList.remove('blur-background');
+  };
+}, [showModal]);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -102,61 +114,58 @@ const Payslip_my = ({ base_url }) => {
         setShowModal(true);
     };
 
-    return (
-        <div className="container">
-            <h5 className="">Payslip My</h5>
-            <span>Access and Generate Your Payslip Here   ! </span>
-            <button className="btn btn-primary float-end" onClick={() => setShowModal(true)} >
-                Generate Payslip
-            </button>
-            <hr className="mt-4" />
-            <div className="row">
-                <div className="col"></div>
-            </div>
-            <table className="table table-striped table-bordered mt-3">
-                <thead className="table-dark">
-                    <tr >
-                        <th>Id</th>
-                        <th>Employee Name</th>
-                        <th>Emp Code</th>
-                        <th>Salary</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {input.map((payslip) => (
-                        <tr key={payslip.id}>
-                            <td>{payslip.id}</td>
-                            <td>{payslip.emp_name}</td>
-                            <td>{payslip.emp_code}</td>
-                            <td>{payslip.salary}</td>
-                            <td>
-                                <button
-                                    className="btn btn-success me-2"
-                                    onClick={() => openEditModal(payslip)}
-                                ><i class="bi bi-pencil-square"></i></button>
-                                <button onClick={() => { delete_by_id(payslip.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
-                            </td>
+   return (
+    <>
+        {/* Content wrapper - only this gets blurred */}
+        <div className={`content-wrapper ${showModal ? 'blur-background' : ''}`}>
+            <div className="container">
+                <h5 className="">Payslip My</h5>
+                <span>Access and Generate Your Payslip Here   ! </span>
+                <button className="btn btn-primary float-end" onClick={() => setShowModal(true)} >
+                    Generate Payslip
+                </button>
+                <hr className="mt-4" />
+                <div className="row">
+                    <div className="col"></div>
+                </div>
+                <table className="table table-striped table-bordered mt-3">
+                    <thead className="table-dark">
+                        <tr >
+                            <th>Id</th>
+                            <th>Employee Name</th>
+                            <th>Emp Code</th>
+                            <th>Salary</th>
+                            <th>Action</th>
                         </tr>
-                    ))}
-
-                </tbody>
-
-            </table>
-            <div>
-                <ToastContainer
-                    pauseOnHover
-                    autoClose={3000}
-                    position="top-right"
-                />
+                    </thead>
+                    <tbody>
+                        {input.map((payslip) => (
+                            <tr key={payslip.id}>
+                                <td>{payslip.id}</td>
+                                <td>{payslip.emp_name}</td>
+                                <td>{payslip.emp_code}</td>
+                                <td>{payslip.salary}</td>
+                                <td>
+                                    <button
+                                        className="btn btn-success me-2"
+                                        onClick={() => openEditModal(payslip)}
+                                    ><i className="bi bi-pencil-square"></i></button>
+                                    <button onClick={() => { delete_by_id(payslip.id) }} className="btn btn-danger ml-2"><i className="bi bi-trash-fill"></i></button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            {/*  modal ---------- */}
-            {showModal && (
+        {/* Modal - outside the blurred wrapper so it stays clear */}
+        {showModal && (
+            <>
+                <div className="modal-backdrop-custom"></div>
                 <div className="modal fade show d-block" tabIndex="-1">
                     <div className="modal-dialog modal-lg ">
                         <div className="modal-content">
-
                             <div className="modal-header">
                                 <h5 className="modal-title">Generate Payslip</h5>
                                 <button
@@ -172,7 +181,6 @@ const Payslip_my = ({ base_url }) => {
                             <form onSubmit={handleSubmit}>
                                 <div className="modal-body">
                                     <div className="row">
-
                                         <div className="mb-3 col-md-6">
                                             <label className="form-label">Employee Name</label>
                                             <input
@@ -209,8 +217,6 @@ const Payslip_my = ({ base_url }) => {
                                             />
                                         </div>
                                     </div>
-
-
                                 </div>
 
                                 <div className="modal-footer">
@@ -226,13 +232,20 @@ const Payslip_my = ({ base_url }) => {
                                     </button>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
-            )}
-        </div>
-    )
+            </>
+        )}
+
+        {/* Toast - also outside so it's not blurred */}
+        <ToastContainer
+            pauseOnHover
+            autoClose={3000}
+            position="top-right"
+        />
+    </>
+)
 }
 
 export default Payslip_my;

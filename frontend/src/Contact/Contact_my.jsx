@@ -78,7 +78,6 @@ const Sales_my = ({ base_url }) => {
                         <th>Employee Code</th>
                         <th>Mobile</th>
                         <th>Action</th>
-                        <th>Print</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,15 +96,12 @@ const Sales_my = ({ base_url }) => {
                             <td>{contact.mobile}</td>
                             <td>
                                 <Link to={`/contact-edit/${contact.id}`} className="btn btn-success me-2"><i class="bi bi-pencil-square"></i></Link>
-                                <button onClick={() => { delete_by_id(contact.id) }} className="btn btn-danger ml-2"><i class="bi bi-trash-fill"></i></button>
-
-                            </td>
-                            <td>
-                                <button onClick={() => downloadPDF(contact.id)} className="">
-                                    <i className="bi bi-printer-fill fs-2 border-0 bg-transparent focus:outline-none"></i>
+                                <button onClick={() => { delete_by_id(contact.id) }} className="btn btn-danger ml-2 me-2"><i class="bi bi-trash-fill"></i></button>
+                                <button onClick={() => downloadPDF(contact.id)} className="btn btn-dark   focus:outline-none ml-2 ">
+                                    <i className="bi bi-printer-fill hover:text-dark"></i>
                                 </button>
-
                             </td>
+
                         </tr>
                     ))}
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->integer('product_qty');
             $table->integer('product_code');
+             $table->integer('price');
             $table->timestamps();
         });
     }
