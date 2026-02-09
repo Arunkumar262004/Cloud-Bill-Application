@@ -33,7 +33,7 @@ const Login = ({ base_url }) => {
                 }, 100);
 
             } else {
-                setError("Server error");
+                setError(res.data.message);
             }
         } catch (err) {
             console.error(err);
