@@ -20,13 +20,13 @@ import Contact_edit from './Contact/Contact_edit';
 import Register from './pages/Register-form'
 import Payslip_my from './Bill/Payslip_my'
 import My_profile from './pages/My_profile'
+import UnderConstruction from './UnderConstruction'
 
 
 
-
-var base_url = "http://56.228.41.113/api";
-var base_url_web = "http://56.228.41.113/api";
-var base_url_image = "http://56.228.41.113";
+var base_url = "http://127.0.0.1:8000/api";
+var base_url_web = "http://127.0.0.1:8000/api";
+var base_url_image = "http://127.0.0.1:8000";
 
 
 function App() {
@@ -72,6 +72,7 @@ function App() {
 
             <Route path='/payslip_my' element={<Payslip_my base_url={base_url}/>} />
             <Route path='/my-account' element={<My_profile base_url={base_url}/>} />
+            <Route path='/analytics' element={<UnderConstruction base_url={base_url}/>} />
 
           </Route>
         )}

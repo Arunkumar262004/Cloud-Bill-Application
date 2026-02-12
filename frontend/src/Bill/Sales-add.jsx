@@ -145,7 +145,7 @@ const Sales_add_form = ({ base_url }) => {
                                         onChange={(e) => handleRowChange(index, e)}
                                         required
                                     >
-                                        <option value="">Select</option>
+                                        <option value=""></option>
                                         <option>Pipes</option>
                                         <option>Drum</option>
                                         <option>Switch Box</option>

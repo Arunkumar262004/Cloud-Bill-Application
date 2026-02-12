@@ -17,10 +17,10 @@ class SalesController extends Controller
         $request->validate([
             'customer_name'               => 'required|string|max:255',
             'items'                       => 'required|array|min:1',
-            'items.*.product_name'        => 'required|string|max:255',
-            'items.*.product_code'        => 'required|string|max:100',
-            'items.*.product_qty'         => 'required|integer|min:1',
-            'items.*.price'               => 'required|numeric|min:0'
+            'items.*.product_name'        => 'required|string',
+            'items.*.product_code'        => 'required|integer',
+            'items.*.product_qty'         => 'required|integer',
+            'items.*.price'               => 'required|numeric'
         ]);
 
         DB::beginTransaction();
@@ -180,13 +180,13 @@ class SalesController extends Controller
     /* ===================== DELETE ===================== */
     public function Sales_delete($id)
     {
-        $sale = Sales::find($id);
+        $sale = Sales_product_model::find($id);
 
         if ($sale) {
-            $stock = Stock::where('product_name', $sale->product_name)->first();
+            $stock = Stock::where('item_name', $sale->proditem_nameuct_name)->first();
 
             if ($stock) {
-                $stock->increment('stock_qty', $sale->product_qty);
+                $stock->increment('stock_qty', $sale->qty);
             }
 
             $sale->delete();

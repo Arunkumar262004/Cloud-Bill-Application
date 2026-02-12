@@ -35,15 +35,15 @@ const Sales_add_form = ({ base_url }) => {
         formData.append("mobile", input.mobile);
         formData.append("place", input.place);
         formData.append("maritial_status", input.maritial_status);
+        formData.append("_method", "PUT");
         if (imgFile) {
             formData.append("img_file", imgFile);
         }
 
 
-        axios.put(base_url + '/contact-update/' + id, formData, {
+        axios.post(base_url + '/contact-update/' + id, formData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-                "Content-Type": "multipart/form-data"
+                Authorization: `Bearer ${localStorage.getItem("access_token")}`
             }
         }).then((res) => {
 
@@ -128,8 +128,7 @@ const Sales_add_form = ({ base_url }) => {
                         </div>
 
                         <div className="d-flex flex-column align-items-center">
-                            <img
-                                src={previewImg || (input.img_file ? `${base_url_image}/storage/contact/${input.img_file}` : "")}
+                            <img  src={`${base_url_image}/storage/contact/${input.profile_image}`}
                                 alt=""
                                 style={{
                                     width: "130px",

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sales extends Model
 {
-    protected $table = 'Sales_table';
-    protected $fillable = ['product_name','product_code','product_qty','customer_name','price'];
+    protected $table = 'sales_table';
+    protected $fillable = ['customer_name','price'];
 }

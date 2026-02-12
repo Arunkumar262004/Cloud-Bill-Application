@@ -14,7 +14,7 @@ class Contact_controller extends Controller
         $request->validate([
             'employee_name'    => 'required|string|max:255',
             'employee_code'    => 'required|integer|unique:contact_table',
-            'mobile'   => 'integer',
+            'mobile'   => 'required|digits_between:10,15',
             'place'     => 'string',
             'maritial_status'           => 'string',
             'img_file'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -22,7 +22,7 @@ class Contact_controller extends Controller
         ]);
 
         $imageName = null;
-        if ($request->hasFile('img_file') && $request->file('img_file')->isValid()) {
+        if ($request->hasFile('img_file') && $request->file('img_file')) {
             $file = $request->file('img_file');
             $imageName = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('contact', $imageName, 'public');
@@ -35,7 +35,7 @@ class Contact_controller extends Controller
             'mobile' => $request->mobile,
             'place' => $request->place,
             'maritial_status' => $request->maritial_status,
-            'img_file'        => $imageName  // save filename in DB
+            'profile_image'        => $imageName  // save filename in DB
 
         ]);
         return response()->json([
@@ -69,9 +69,8 @@ class Contact_controller extends Controller
         if ($contact) {
             $request->validate([
                 'employee_name' => 'string|max:255',
-                'employee_code' => 'integer',
-                "employee_code" => "integer|unique:contact_table,employee_code," . $contact,
-                'mobile' => 'integer',
+                "employee_code" => "integer|unique:contact_table,employee_code," . $id,
+                'mobile' => 'required|string|min:10|max:15',
                 'place' => 'string',
                 'maritial_status' => 'string',
                 'img_file' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
@@ -88,8 +87,8 @@ class Contact_controller extends Controller
             if ($request->hasFile('img_file') && $request->file('img_file')->isValid()) {
                 $file = $request->file('img_file');
                 $imageName = time() . '_' . $file->getClientOriginalName();
-                $file->storeAs('contact', $imageName, 'public'); // ✅ stores in public disk
-                $updateData['img_file'] = $imageName; // update DB
+                $file->storeAs('contact', $imageName, 'public');
+                $updateData['profile_image'] = $imageName;
             }
 
 

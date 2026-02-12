@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('sales_items', function (Blueprint $table) {
             $table->id();
 
-            // Foreign key to Sales_table
+            // Foreign key to sales_table
             $table->unsignedBigInteger('sale_id');
 
             $table->string('item_name');
@@ -23,7 +23,7 @@ return new class extends Migration {
 
             $table->foreign('sale_id')
                   ->references('id')
-                  ->on('Sales_table')
+                  ->on('sales_table')
                   ->onDelete('cascade');
         });
     }
