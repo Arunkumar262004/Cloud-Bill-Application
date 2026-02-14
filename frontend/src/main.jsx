@@ -4,8 +4,7 @@ import { HashRouter, Routes, Route, BrowserRouter } from "react-router-dom"; // 
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
+  <BrowserRouter basename="/Cloudbill-app">
     <App />
   </BrowserRouter>
-  
 )
