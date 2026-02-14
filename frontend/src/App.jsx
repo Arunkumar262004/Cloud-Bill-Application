@@ -24,9 +24,9 @@ import UnderConstruction from './UnderConstruction'
 
 
 
-var base_url = "http://56.228.41.113:8000/api";
-var base_url_web = "http://56.228.41.113:8000/api";
-var base_url_image = "http://56.228.41.113:8000";
+var base_url = "http://56.228.41.113/api";
+var base_url_web = "http://56.228.41.113/api";
+var base_url_image = "http://56.228.41.113";
 
 
 function App() {
